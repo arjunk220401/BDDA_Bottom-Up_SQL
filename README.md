@@ -94,6 +94,22 @@ The bottom-up approach was adopted for designing this database structure. In thi
    - **Relationships:**
      - Linked to `Applicant`.
 
+Relationship:
+
+1. **Applicant to FamilyDetails**: This is a **one-to-one relationship**. Each applicant (`ApplicantID` in `applicant` table) has a single set of family details (`ApplicantID` in `familydetails` table).
+
+2. **Applicant to EmergencyContact**: This is a **one-to-many relationship**. An applicant (`ApplicantID` in `applicant` table) can have multiple emergency contacts (`ApplicantID` in `emergencycontact` table).
+
+3. **Applicant to Passport**: This is a **one-to-one relationship**. Each applicant (`ApplicantID` in `applicant` table) can have one passport (`ApplicantID` in `passport` table).
+
+4. **Applicant to CriminalProceedings**: This is a **one-to-many relationship**. An applicant (`ApplicantID` in `applicant` table) can have multiple criminal proceedings (`ApplicantID` in `criminalproceedings` table).
+
+5. **Applicant to Address**: This is a **one-to-many relationship**. An applicant (`ApplicantID` in `applicant` table) can have multiple addresses (`ApplicantID` in `address` table).
+
+6. **Applicant to FeeDetails**: This is a **one-to-one relationship**. Each applicant (`ApplicantID` in `applicant` table) has a single set of fee details (`ApplicantID` in `feedetails` table).
+
+In summary, the relationships are mostly **one-to-many** except for the **one-to-one** relationships between `Applicant` and `FamilyDetails`, `Applicant` and `Passport`, and `Applicant` and `FeeDetails`.
+
 ## Usage
 
 This database structure is designed to manage the comprehensive data involved in processing passport applications. It supports data capture for various forms and ensures the integrity and consistency of the application process. The relationships between the entities allow for efficient data retrieval and management, enabling streamlined operations in handling passport applications.
