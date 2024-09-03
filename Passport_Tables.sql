@@ -1,5 +1,130 @@
-CREATE DATABASE PASSPORT;
+
+#Normalisation#
+    
+Let’s normalize the passport application database step by step, from 1NF to 3NF.
+
+1NF (First Normal Form)
+To achieve 1NF, we must ensure the following for each table:
+
+Every column must contain atomic (indivisible) values.
+There should be no repeating groups or arrays.
+Each table must have a unique primary key.
+We already have a good starting point with your entities, but we'll review and adjust them to ensure they meet the criteria for 1NF.
+
+Identified Issues:
+Multiple contact numbers for emergency contacts.
+Multiple addresses for applicants.
+Possible multiple criminal proceedings for applicants.
+Normalized Tables in 1NF:
+Applicant Table:
+
+Primary Key: ApplicantID
+Attributes: GivenName, Surname, DateOfBirth, RaceOfBirth, Gender, MaritalStatus, Citizenship, PAN, VoterID, EmploymentType, OrganizationName, EducationalQualification, AadhaarNumber
+All attributes are atomic, so no changes needed.
+
+FamilyDetails Table:
+
+Primary Key: FamilyID
+Attributes: ApplicantID (Foreign Key), FatherName, MotherName, LegalGuardianName, SpouseName, FatherPassportNumber, MotherPassportNumber, FatherNationality, MotherNationality, MotherStatus
+This is already in 1NF since each attribute contains atomic values.
+
+EmergencyContact Table:
+
+Primary Key: ContactID
+Attributes: ApplicantID (Foreign Key), Name, ContactAddress, MobileNumber, TelephoneNumber, EmailID
+Since applicants can have multiple emergency contacts, this structure supports a one-to-many relationship and complies with 1NF.
+
+Address Table:
+
+Primary Key: AddressID
+Attributes: ApplicantID (Foreign Key), AddressType, HouseNoStreetName, City, District, State, PIN, PoliceStation, MobileNumber, TelephoneNumber, EmailID
+Each applicant can have multiple addresses (e.g., permanent, temporary), and this table supports that with a one-to-many relationship.
+
+CriminalProceedings Table:
+
+Primary Key: ProceedingID
+Attributes: ApplicantID (Foreign Key), OffenceDescription, Pending, CourtDetails, WarrantDetails, ArrestDetails, DepartureProhibition
+Since there could be multiple criminal proceedings for one applicant, this structure is already in 1NF.
+
+Passport Table:
+
+Primary Key: PassportID
+Attributes: ApplicantID (Foreign Key), PassportNumber, TypeOfApplication, TypeOfBooklet, ValidityRequired, DateOfIssue, DateOfExpiry, ReissueReason, PersonalParticularsChronology
+This table contains atomic values and complies with 1NF.
+
+FeeDetails Table:
+
+Primary Key: FeeID
+Attributes: ApplicantID (Foreign Key), FeeAmount, DDNumber, DDIssueDate, BankName, BranchName
+Fee details are atomic, so no changes needed.
+
+    
+2NF (Second Normal Form)
+To achieve 2NF, the following must be ensured:
+
+The table is already in 1NF.
+All non-key attributes are fully dependent on the entire primary key (no partial dependencies).
+Issues Identified:
+Some non-key attributes are dependent only on a part of the primary key (such as in cases where composite keys are used).
+Steps for 2NF:
+Applicant Table:
+
+The Applicant table is in 2NF since all attributes depend on the primary key ApplicantID.
+FamilyDetails Table:
+
+All attributes depend on FamilyID, and the table is in 2NF.
+EmergencyContact Table:
+
+No partial dependencies; ContactID uniquely identifies each emergency contact, so the table is in 2NF.
+Address Table:
+
+Each address is uniquely identified by AddressID, and all attributes are dependent on it. Therefore, this table is also in 2NF.
+CriminalProceedings Table:
+
+All attributes depend on ProceedingID, and the table is in 2NF.
+Passport Table:
+
+No partial dependencies exist, so the Passport table is in 2NF.
+FeeDetails Table:
+
+Each attribute is fully dependent on FeeID, and the table is in 2NF.
+
+    
+3NF (Third Normal Form)
+To achieve 3NF, we need to ensure:
+
+The table is already in 2NF.
+There are no transitive dependencies (i.e., non-key attributes should not depend on other non-key attributes).
+Issues Identified:
+There may be transitive dependencies in the FamilyDetails and FeeDetails tables.
+Steps for 3NF:
+Applicant Table:
+
+The Applicant table does not have transitive dependencies, so it is in 3NF.
+FamilyDetails Table:
+
+No transitive dependencies are present. Attributes like FatherName, MotherName, etc., are only dependent on FamilyID. The table is in 3NF.
+EmergencyContact Table:
+
+The EmergencyContact table does not have any transitive dependencies. It is in 3NF.
+Address Table:
+
+The Address table is free of transitive dependencies, so it is in 3NF.
+CriminalProceedings Table:
+
+No transitive dependencies exist here, so the table is in 3NF.
+Passport Table:
+
+The Passport table is already in 3NF as there are no transitive dependencies.
+FeeDetails Table:
+
+Attributes like BankName and BranchName depend directly on FeeID, and there are no transitive dependencies. Therefore, it is in 3NF.                   
+
+    
+The passport application database is fully normalized through 1NF, 2NF, and 3NF. It is ensured that each table is well-structured, ensuring data integrity, minimizing redundancy, and making the system scalable and easy to maintain.CREATE DATABASE PASSPORT;
 use passport;
+
+    
 
 CREATE TABLE Applicant (
     ApplicantID CHAR(6) PRIMARY KEY,
