@@ -2,82 +2,82 @@ CREATE DATABASE PASSPORT;
 use passport;
 
 CREATE TABLE Applicant (
-    ApplicantID INT PRIMARY KEY AUTO_INCREMENT,
-    GivenName VARCHAR(100),
-    Surname VARCHAR(100),
+    ApplicantID CHAR(6) PRIMARY KEY,
+    GivenName VARCHAR(25),
+    Surname VARCHAR(20),
     DateOfBirth DATE,
     PlaceOfBirth VARCHAR(100),
     Gender VARCHAR(10),
-    MaritalStatus VARCHAR(20),
-    Citizenship VARCHAR(50),
+    MaritalStatus VARCHAR(10),
+    Citizenship VARCHAR(15),
     PAN VARCHAR(20),
     VoterID VARCHAR(20),
     EmploymentType VARCHAR(50),
-    OrganizationName VARCHAR(100),
+    OrganizationName VARCHAR(50),
     EducationalQualification VARCHAR(50),
     AadhaarNumber VARCHAR(12)
 );
 
 CREATE TABLE Passport (
-    PassportID INT PRIMARY KEY AUTO_INCREMENT,
-    ApplicantID INT,
+    PassportID CHAR(6) PRIMARY KEY,
+    ApplicantID CHAR(6),
     PassportNumber VARCHAR(20),
     TypeOfApplication VARCHAR(20),
     TypeOfBooklet VARCHAR(20),
     ValidityRequired VARCHAR(20),
     DateOfIssue DATE,
     DateOfExpiry DATE,
-    PlaceOfIssue VARCHAR(100),
-    ReissueReason VARCHAR(255),
-    PersonalParticularChangeReason VARCHAR(255),
+    PlaceOfIssue VARCHAR(25),
+    ReissueReason VARCHAR(100),
+    PersonalParticularChangeReason VARCHAR(100),
     PreviousPassportNumber VARCHAR(20),
     FOREIGN KEY (ApplicantID) REFERENCES Applicant(ApplicantID)
 );
 
 CREATE TABLE FamilyDetails (
-    FamilyID INT PRIMARY KEY AUTO_INCREMENT,
-    ApplicantID INT,
-    FatherName VARCHAR(100),
-    MotherName VARCHAR(100),
-    LegalGuardianName VARCHAR(100),
-    SpouseName VARCHAR(100),
+    FamilyID CHAR(6) PRIMARY KEY,
+    ApplicantID CHAR(6),
+    FatherName VARCHAR(25),
+    MotherName VARCHAR(25),
+    LegalGuardianName VARCHAR(25),
+    SpouseName VARCHAR(25),
     FatherPassportNumber VARCHAR(20),
     MotherPassportNumber VARCHAR(20),
-    FatherNationality VARCHAR(50),
-    MotherNationality VARCHAR(50),
+    FatherNationality VARCHAR(20),
+    MotherNationality VARCHAR(20),
     FOREIGN KEY (ApplicantID) REFERENCES Applicant(ApplicantID)
 );
 
 CREATE TABLE Address (
-    AddressID INT PRIMARY KEY AUTO_INCREMENT,
-    ApplicantID INT,
+    AddressID CHAR(6) PRIMARY KEY,
+    ApplicantID CHAR(6),
     AddressType VARCHAR(20),
-    HouseNoStreetName VARCHAR(255),
-    City VARCHAR(100),
-    District VARCHAR(100),
-    StateUT VARCHAR(100),
-    PIN VARCHAR(10),
+    HouseNoStreetName VARCHAR(100),
+    City VARCHAR(20),
+    District VARCHAR(20),
+    StateUT VARCHAR(20),
+    PIN CHAR(6),
     PoliceStation VARCHAR(100),
-    MobileNumber VARCHAR(15),
-    TelephoneNumber VARCHAR(15),
-    EmailID VARCHAR(100),
+    MobileNumber CHAR(10),
+    TelephoneNumber CHAR(11),
+    EmailID VARCHAR(50),
     FOREIGN KEY (ApplicantID) REFERENCES Applicant(ApplicantID)
 );
 
 CREATE TABLE EmergencyContact (
-    ContactID INT PRIMARY KEY AUTO_INCREMENT,
-    ApplicantID INT,
-    Name VARCHAR(100),
-    ContactAddress VARCHAR(255),
-    MobileNumber VARCHAR(15),
-    TelephoneNumber VARCHAR(15),
-    EmailID VARCHAR(100),
+    ContactID CHAR(6) PRIMARY KEY,
+    ApplicantID CHAR(6),
+    Name VARCHAR(25),
+    ContactAddress VARCHAR(50),
+    MobileNumber CHAR(10),
+    TelephoneNumber CHAR(11),
+    EmailID VARCHAR(50),
     FOREIGN KEY (ApplicantID) REFERENCES Applicant(ApplicantID)
 );
 
 CREATE TABLE CriminalProceedings (
-    ProceedingID INT PRIMARY KEY AUTO_INCREMENT,
-    ApplicantID INT,
+    ProceedingID CHAR(6) PRIMARY KEY,
+    ApplicantID CHAR(6),
     OffenceDescription TEXT,
     Pending BOOLEAN,
     CourtDetails TEXT,
@@ -88,14 +88,14 @@ CREATE TABLE CriminalProceedings (
 );
 
 CREATE TABLE FeeDetails (
-    FeeID INT PRIMARY KEY AUTO_INCREMENT,
-    ApplicantID INT,
+    FeeID CHAR(6) PRIMARY KEY,
+    ApplicantID CHAR(6),
     FeeAmount DECIMAL(10, 2),
     DDNumber VARCHAR(20),
     DDIssueDate DATE,
     DDExpiryDate DATE,
-    BankName VARCHAR(100),
-    BranchName VARCHAR(100),
+    BankName VARCHAR(25),
+    BranchName VARCHAR(25),
     FOREIGN KEY (ApplicantID) REFERENCES Applicant(ApplicantID)
 );
 
